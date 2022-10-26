@@ -1,6 +1,12 @@
 import React from 'react'
-import { Outlet, Link } from "react-router-dom";
+import { Outlet, Link, useNavigate } from "react-router-dom";
 export default function Navbar() {
+
+  const navigate = useNavigate()
+  const logout=()=>{
+    navigate('/login')
+  }
+
   return (
     <div>
           <nav className="main-header navbar navbar-expand navbar-white navbar-light">
@@ -133,10 +139,15 @@ export default function Navbar() {
       </a>
     </li>
     <li className="nav-item">
+      <a className="nav-link" onClick={logout} role="button">       
+      <i className='fas fa-sign-out-alt'></i>
+      </a>
+    </li>
+    {/* <li className="nav-item">
       <a className="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
         <i className="fas fa-th-large" />
       </a>
-    </li>
+    </li> */}
   </ul>
 </nav>
   

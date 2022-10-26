@@ -5,25 +5,26 @@ import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { useEffect, useState } from "react";
 import { enhancedApi as api } from "../Services/codeGenApis/CustomerApi";
-import {RootState,AppDispatch} from '../Store/store'
+import { RootState, AppDispatch } from '../Store/store'
 import { useAppDispatch, useTypedSelector } from '../Store/store'
 import { Formik, Form } from 'formik'
 import FormikControl from "../components/formikContainer/FormikControl";
 
 function Employee() {
-  
-  const { data = [], error, isLoading, isFetching, isError } = useCustomerGetAllQuery()  
-  const [isOpen, setIsOpen] = useState<boolean>(false) 
-  const [selectedEmpId, setSelecedEmpId] = useState<CustomerGetApiArg>({ id: 0 }) 
+
+  const { data = [], error, isLoading, isFetching, isError } = useCustomerGetAllQuery()
+  const [isOpen, setIsOpen] = useState<boolean>(false)
+  const [isOpenAddDialog, setIsOpenAddDialog] = useState<boolean>(false)
+  const [selectedEmpId, setSelecedEmpId] = useState<CustomerGetApiArg>({ id: 0 })
   const dispatch = useAppDispatch();
   const OpenEmployeeDialog = (id: number) => {
-    setSelecedEmpId({id})
-    setIsOpen((id > 0))  
+    setSelecedEmpId({ id })
+    setIsOpen((id > 0))
     /*
      dispatch( api.endpoints.customerGet.initiate({id}))
                 .then((data)=>{console.log(data); }
               ) 
-    */   
+    */
   }
 
   const CloseEmployeeDialog = () => {
@@ -41,7 +42,7 @@ function Employee() {
   return (
     <div>
       <div className="content-header">
-        <h5 className="m-0">Employees <Button icon="pi pi-plus" className="p-button-rounded p-button-text " onClick={() => setIsOpen(true)} aria-label="Show" />
+        <h5 className="m-0">Employees <Button icon="pi pi-plus" className="p-button-rounded p-button-text " onClick={() => setIsOpenAddDialog(true)} aria-label="Show" />
         </h5>
 
       </div>
@@ -73,7 +74,12 @@ function Employee() {
                 )
           }
         </div>
-       <EmployeeAdd></EmployeeAdd>
+        <Dialog header="New Employee" visible={isOpenAddDialog} onHide={() => setIsOpenAddDialog(false)}>
+          <div style={{margin:'5px'}}>
+          <EmployeeAdd></EmployeeAdd>
+          </div>
+        </Dialog>
+
       </section>
     </div>
   )
@@ -110,12 +116,12 @@ export const EmployeeDetail = (props: EmployeeDetailProps) => {
   )
 }
 
-export const EmployeeAdd=()=>{
+export const EmployeeAdd = () => {
   const initialValues = {
-    name: '',   
-    email: ''    
+    name: '',
+    email: ''
   }
-  const onSubmit = (values: any)=> {
+  const onSubmit = (values: any) => {
     debugger;
     console.log('Form data', values)
     console.log('Saved data', JSON.parse(JSON.stringify(values)))
@@ -124,25 +130,25 @@ export const EmployeeAdd=()=>{
   return (
     <Formik
       initialValues={initialValues}
-     // validationSchema={validationSchema}
-      onSubmit={onSubmit}     
+      // validationSchema={validationSchema}
+      onSubmit={onSubmit}
     >
       {formik => (
         <Form>
           <div className="p-fluid grid">
-          <FormikControl
-            control='input'
-           // type='email'
-            label='Email'
-            name='email'
-            cl='4'
-          />
-          <FormikControl
-            control='input'
-            label='Name'
-            name='name'
-            cl='4'
-          />         
+            <FormikControl
+              control='input'
+              // type='email'
+              label='Email'
+              name='email'
+              
+            />
+            <FormikControl
+              control='input'
+              label='Name'
+              name='name'
+              
+            />
           </div>
           <button className="btn-sm btn-primary" type='submit'>Submit</button>
         </Form>

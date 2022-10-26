@@ -6,7 +6,7 @@ import TextError from './TextError'
 type InputProps =ControlProps & React.ComponentProps<typeof InputText>
 function Input(props:Partial<InputProps>) {
 
-  let clsname="field col-12 md:col-"+props.cl
+  let clsname="field col-12 md:col-"+props.cl??12
   return (
 
     <div className={clsname}>
