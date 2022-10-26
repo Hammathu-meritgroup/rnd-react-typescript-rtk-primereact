@@ -42,24 +42,35 @@ function Employee() {
   return (
     <div>
       <div className="content-header">
-        <h5 className="m-0">Employees <Button icon="pi pi-plus" className="p-button-rounded p-button-text " onClick={() => setIsOpenAddDialog(true)} aria-label="Show" />
-        </h5>
+        <h1 className="m-0">Employees 
+        <Button icon="pi pi-plus" className="p-button-rounded p-button-text " onClick={() => setIsOpenAddDialog(true)} aria-label="Show" />
+        </h1>
 
       </div>
       <section className="content">
-        <div className="App">
+        <div className="card">
+          <div className="card-header">
+            <h3 className="card-title">Employees</h3>
+            <div className="card-tools">
+              <button type="button" className="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+                <i className="fas fa-minus" /></button>
+              <button type="button" className="btn btn-tool" data-card-widget="remove" data-toggle="tooltip" title="Remove">
+                <i className="fas fa-times" /></button>
+            </div>
+          </div>
+          <div className="card-body p-0">          
           {
             isError ? <div>An error has occurred{JSON.stringify(error)} !</div>
               :
               isLoading ? <div>Loading...</div>
                 : (
-                  <div className="card">
+                  <div >
                     <DataTable value={data} size="small" responsiveLayout="scroll">
-                      <Column field="id" header="id"></Column>
-                      <Column field="email" header="email"></Column>
+                      <Column field="id" header="Id"></Column>
+                      <Column field="email" header="Email"></Column>
                       <Column field="contactNumber" header="ContactNumber"></Column>
-                      <Column field="alternateContactNumber" header="alternateContactNumber"></Column>
-                      <Column field="createdBy" header="createdBy"></Column>
+                      <Column field="alternateContactNumber" header="AlternateContactNumber"></Column>
+                      <Column field="createdBy" header="CreatedBy"></Column>
                       <Column header="Action" body={imageBodyTemplate}></Column>
                     </DataTable>
                     {
@@ -73,10 +84,13 @@ function Employee() {
                   </div>
                 )
           }
+        
+          </div>
         </div>
+        
         <Dialog header="New Employee" visible={isOpenAddDialog} onHide={() => setIsOpenAddDialog(false)}>
-          <div style={{margin:'5px'}}>
-          <EmployeeAdd></EmployeeAdd>
+          <div style={{ margin: '5px' }}>
+            <EmployeeAdd></EmployeeAdd>
           </div>
         </Dialog>
 
@@ -141,13 +155,13 @@ export const EmployeeAdd = () => {
               // type='email'
               label='Email'
               name='email'
-              
+
             />
             <FormikControl
               control='input'
               label='Name'
               name='name'
-              
+
             />
           </div>
           <button className="btn-sm btn-primary" type='submit'>Submit</button>
